@@ -1,0 +1,47 @@
+
+bool comparatorFunc(vector<int> &A, vector<int> &B){
+    return A[2] > B[2];
+}
+
+class Solution {
+public:
+    
+    
+    int twoCitySchedCost(vector<vector<int>>& costs) {
+        for(auto &x: costs){
+            x.push_back(abs(x[0]-x[1]));
+        }
+        
+        sort(costs.begin(), costs.end(), comparatorFunc);
+        
+        int C1 = costs.size()/2;
+        int C2 = costs.size()/2;
+        
+        int totalCost = 0;
+        
+        for(auto &x: costs){
+            if(C1 == 0){
+                totalCost += x[1];
+                C2--;
+            }
+            else if(C2 == 0){
+                totalCost += x[0];
+                C1--;
+            }
+            else{
+                int m = min(x[0], x[1]);
+                if(m==x[0]){
+                    totalCost+= x[0];
+                    C1--;
+                }
+                else{
+                    totalCost+= x[1];
+                    C2--;
+                }
+            }
+        }
+        
+        return totalCost;
+        
+    }
+};
